@@ -48,6 +48,31 @@ body {
     font-style: italic;
     font-weight: bold; }
 
+.botonCarrito {
+  padding: 50px 10px;
+  /*Modificación del color de los íconos SVG RS*/
+  filter: invert(28%) sepia(27%) saturate(4732%) hue-rotate(300deg) brightness(96%) contrast(93%); }
+
+.panelCarrito{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  margin-top: 150px;
+  justify-content: center;
+  position: absolute;
+  box-shadow: 10px 10px 15px rgba(148, 75, 142, 0.5);
+  flex-direction: column;
+  background-color: #F9F3DF;
+  border: 1px solid #CF2F87;
+  width: 30%;
+  visibility: hidden;
+  left: 70%;
+    
+}
+
+.activo{
+  visibility: visible;
+}
+
 /*NAVBAR*/
 .navbar {
   margin: 50px 20px;
@@ -144,7 +169,8 @@ body {
     row-gap: 2%;
     justify-items: center;
     align-items: center;
-    grid-template-areas: "card1 card2 card3" "card4 card5 card6"; }
+    grid-template-areas: "card1 card2 card3"
+ "card4 card5 card6"; }
   .productosDestacados__card, .productosDestacados__card__cookies, .productosDestacados__card__cupCake, .productosDestacados__card__cakePop, .productosDestacados__card__bombonesChocolate, .productosDestacados__card__tortaNumero, .productosDestacados__card__giftCard, .productosDestacados__card__circo, .productosDestacados__card__naturaleza, .productosDestacados__card__bautismoY1, .productosDestacados__card__bodas, .productosDestacados__card__quince, .productosDestacados__card__tartaFrutillas, .productosDestacados__card__tartaChocolate, .productosDestacados__card__tartaDurazno, .productosDestacados__card__galletasDecoradas, .productosDestacados__card__galletasCraqueladas, .productosDestacados__card__galletasPastillaje, .productosDestacados__card__fosforitos, .productosDestacados__card__brusquetas, .productosDestacados__card__canapes, .productosDestacados__card__empanadasArabes, .productosDestacados__card__pizzetas, .productosDestacados__card__empanadas {
     display: flex;
     flex-direction: column;
@@ -423,7 +449,9 @@ h1, h2, h3 {
       grid-template-rows: repeat(3, 1fr);
       column-gap: 2%;
       row-gap: 5%;
-      grid-template-areas: "card1 card2"  "card3 card4"  "card5 card6"; } }
+      grid-template-areas: "card1 card2" 
+ "card3 card4" 
+ "card5 card6"; } }
 
 /* 2do MQ para corregir solapamiento de elementos nav bar con su borde */
 @media screen and (max-width: 1065px) {
@@ -448,7 +476,12 @@ h1, h2, h3 {
       grid-template-rows: repeat(6, 1fr);
       column-gap: 2%;
       row-gap: 5%;
-      grid-template-areas: "card1"  "card2"  "card3" "card4"  "card5" "card6"; }
+      grid-template-areas: "card1" 
+ "card2" 
+ "card3"
+ "card4" 
+ "card5"
+ "card6"; }
   .formulario {
     height: auto;
     flex-direction: column;
