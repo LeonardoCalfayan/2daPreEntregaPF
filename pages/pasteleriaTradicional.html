@@ -83,14 +83,14 @@
     </section>
        
     <section>
-        <form class="formulario textoGenerico" action="/" method="post">
+        <form id="formPasteleríaTradicional" class="formulario textoGenerico" action="/" method="post">
             <div class="formularioIzquierdo"> 
                 
                 <div class="formularioItem">  
                     <legend class="tituloSeccion"> Elegí lo que más te guste de nuestra Pastelería Tradicional</legend>
                     
                     <fieldset>
-                        <select name="">
+                        <select id="seleccionarPasteleríaTradicional" name="">
                             <option value="tartaFrutillas">Tarta de Frutillas con crema</option>
                             <option value="tartaChocolate">Tarta mouse de chocolate</option>
                             <option value="tartaDurazno">Tarta de Durazno</option>
@@ -101,12 +101,12 @@
                     </div>
                 <div class="formularioItem">
                     <label for="sinTacc">Apto celíaco </label>
-                    <input type="checkbox" name="sinTacc" value="1" />
+                    <input id="sinTaccPasteleríaTradicional" type="checkbox" name="sinTacc" value="1" />
                     <img class="logoSTacc" src="../images/sintacc.png" alt="Logo Sin TACC">
                 </div>
                 <div class="formularioItem">        
                     <label for="cantidad">Cantidad</label>
-                    <input id="cantidad" type="number" placeholder="Cantidad">
+                    <input id="cantidadPasteleríaTradicional" type="number" placeholder="Cantidad">
                 </div> 
                 </div>
                 <div class="formularioDerecho">  
@@ -131,6 +131,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="../js/script.js"></script>
 </body>
 </html>
