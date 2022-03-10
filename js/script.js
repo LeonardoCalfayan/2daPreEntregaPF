@@ -70,6 +70,7 @@ formPasteleriaTradicional.addEventListener('submit',(e) => {
         let productoEncontrado = carrito.find((producto) => producto.nombre === nombre)
         if(productoEncontrado){
             productoEncontrado.cantidad += cantidad
+            productoEncontrado.subTotalProducto()
         }else{
             let {precio} = (listaPrecios.find((producto) => producto.nombre === nombre)) //Desestructuración
             nuevoProducto = new productoPasteleríaTradicional(nombre, cantidad, aptoCeliaco, comentarios, precio)
@@ -96,22 +97,39 @@ function validarCantidad(cantidad){
 }
 
 const mostrarCarrito = () => {
-    panelCarrito.innerHTML = "";
+    panelCarrito.innerHTML = ""
     carrito.forEach((item) => {
-      let {nombre, cantidad, precio, subTotal } = item;
+      let {nombre, cantidad, precio, subTotal } = item
       panelCarrito.innerHTML += `
           <div class="caja--carrito" >
            
             <div class="caja--carrito--datos">
-              <p class="nombre">${nombre}</p>
-              <p class="cantidad">CANTIDAD: ${cantidad}</p>
-              <p class="subtotal">Subtotal: $${subTotal}</p>
-              <p class="precio"> $ <span>${precio}</span> </p>
+                <p class="nombre">${nombre}</p>
+                <p class="cantidad">CANTIDAD: ${cantidad}</p>
+                <p class="precio"> precio: $ <span>${precio}</span> </p>
+                <p class="subtotal">Subtotal: $${subTotal}</p>
+                <button class="botonEliminar" data-id="${nombre}">Eliminar</button>
             
             </div>
   
-          </div>`;
-    });
-    localStorage.setItem("carritoDB", JSON.stringify(carrito));
+          </div>`
+    })
+    localStorage.setItem("carritoDB", JSON.stringify(carrito))
  
-  };
+  }
+
+  const handlerBotonesPanelCarrito = () => {
+    panelCarrito.addEventListener("click", (e) => {
+        if (e.target.classList.contains("botonEliminar")) {
+            eliminarProducto(e.target.getAttribute("data-id"))
+            console.log("handler")
+        }
+    })
+  }
+
+  const eliminarProducto = (producto) => {
+        carrito = carrito.filter((element) => element.nombre !== producto)  
+        mostrarCarrito()
+  }
+
+  handlerBotonesPanelCarrito()
