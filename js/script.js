@@ -16,7 +16,7 @@ const listaPrecios = [
     precio: 900
     },
     {
-    nombre: "galetasDecoradas",
+    nombre: "galletasDecoradas",
     precio: 300
     },
     {
@@ -24,22 +24,24 @@ const listaPrecios = [
     precio: 350
     },
     {
-    nombre: "galetasFlores",
+    nombre: "galletasFlores",
     precio: 325
     }
 ]
 
-let carrito = JSON.parse(localStorage.getItem("carritoDB")) || [] //levanto el carrito del Local Storage si está, sino el carrito = arreglo vacío
+//levanto el carrito del Local Storage si está, sino el carrito = arreglo vacío
+let carrito
+localStorage.getItem("carritoDB") ? carrito = JSON.parse(localStorage.getItem("carritoDB")) : carrito = []  //levanto el carrito del Local Storage si está, sino el carrito = arreglo vacío
 
-let formPasteleriaTradicional = document.getElementById("formPasteleríaTradicional")
-let botonCarrito = document.querySelector(".botonCarrito")
+
+const formPasteleriaTradicional = document.getElementById("formPasteleríaTradicional")
+const botonCarrito = document.querySelector(".botonCarrito")
 const panelCarrito = document.querySelector(".panelCarrito") 
 
 class productoPasteleríaTradicional{
-    constructor(nombre, cantidad, aptoCeliaco, comentarios, precio){
+    constructor(nombre, cantidad, comentarios, precio){
         this.nombre = nombre
         this.cantidad = cantidad
-        this.aptoCeliaco = aptoCeliaco
         this.comentarios = comentarios
         this.precio = precio
         this.subTotal = 0
@@ -69,14 +71,27 @@ formPasteleriaTradicional.addEventListener('submit',(e) => {
         //Verificación de existencia del producto en carrito
         let productoEncontrado = carrito.find((producto) => producto.nombre === nombre)
         if(productoEncontrado){
-            productoEncontrado.cantidad += cantidad
-            productoEncontrado.subTotalProducto()
+            if(aptoCeliaco){
+                let nuevoProducto = new productoPasteleríaTradicional() 
+                   nuevoProducto = {
+                   ...productoEncontrado,  //SPREAD: copio el mismo objeto pero agrego una nueva propiedad al objeto producto sólo si es apto celíaco
+                   cantidad: cantidad,
+                   sinTacc: true
+                   }  
+                nuevoProducto.subTotal = nuevoProducto.cantidad * nuevoProducto.precio //Al usar Spread no se copiaron los métodos del objeto, por eso lo hago a mano
+                carrito.push(nuevoProducto)
+                }else{              
+                productoEncontrado.cantidad += cantidad
+                productoEncontrado.subTotalProducto()
+                }
         }else{
+            //Utilizo desestructuración
             let {precio} = (listaPrecios.find((producto) => producto.nombre === nombre)) //Desestructuración
-            nuevoProducto = new productoPasteleríaTradicional(nombre, cantidad, aptoCeliaco, comentarios, precio)
+            nuevoProducto = new productoPasteleríaTradicional(nombre, cantidad, comentarios, precio)
             nuevoProducto.subTotalProducto()
             carrito.push(nuevoProducto)
         }
+
     }else{
         formPasteleriaTradicional.reset()
     }
@@ -99,12 +114,20 @@ function validarCantidad(cantidad){
 const mostrarCarrito = () => {
     panelCarrito.innerHTML = ""
     carrito.forEach((item) => {
-      let {nombre, cantidad, precio, subTotal } = item
+      let {nombre, cantidad, precio, subTotal } = item //Desestructuración de objeto
+      let sinTacc
+      (item?.sinTacc)? sinTacc="si":sinTacc="no" //Operador Ternario
+    //   if((item?.sinTacc)){ //Acceso Condicional
+    //       sinTacc="si"
+    //   }else{
+    //       sinTacc="no"
+    //   }
       panelCarrito.innerHTML += `
           <div class="caja--carrito" >
            
             <div class="caja--carrito--datos">
                 <p class="nombre">${nombre}</p>
+                <p class="sinTacc">Sin TACC ${sinTacc}</p>
                 <p class="cantidad">CANTIDAD: ${cantidad}</p>
                 <p class="precio"> precio: $ <span>${precio}</span> </p>
                 <p class="subtotal">Subtotal: $${subTotal}</p>
@@ -115,7 +138,7 @@ const mostrarCarrito = () => {
           </div>`
     })
     localStorage.setItem("carritoDB", JSON.stringify(carrito))
- 
+    
   }
 
   const handlerBotonesPanelCarrito = () => {
